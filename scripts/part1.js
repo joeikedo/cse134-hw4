@@ -1,3 +1,32 @@
+let outputTag;
+
+//Clear functions, clear text as soon as a button is clicked. 
+function clearBeforeAlert(event){
+    outputTag.innerText = '';
+
+    setTimeout(alertFunction, 0);
+}
+
+function clearBeforeConfirm(event){
+    outputTag.innerText = '';
+
+    setTimeout(confirmFunction, 0);
+}
+
+function clearBeforePromptUnsafe(event){
+    outputTag.innerText = '';
+
+    setTimeout(promptUnsafeFunction, 0);
+}
+
+function clearBeforePromptSafe(event){
+    outputTag.innerText = '';
+
+    setTimeout(promptSafeFunction, 0);
+}
+
+//The functions called by the clear functions to do the actual alert boxes etc
+
 function alertFunction(event){
     alert('Alert button was pressed');
 }
@@ -5,16 +34,14 @@ function alertFunction(event){
 function confirmFunction(event){
     let confirmResult = confirm('Press a button!');
 
-    const outputTag = document.getElementById('confirmOutputTag');
     outputTag.innerText = `The value returned by the confirm method is : ${confirmResult}`;
 }
 
 function promptUnsafeFunction(event){
     let userInput = prompt('Please enter your input', '');
-    const outputTag = document.getElementById('promptUnsafeOutput');
 
     if(userInput == null){
-        outputTag.innerText = 'User didn’t enter anything';
+        outputTag.innerText = 'User didn\'t enter anything';
     }
     else{
         outputTag.innerText = `The user entered: ${userInput}`;
@@ -24,20 +51,18 @@ function promptUnsafeFunction(event){
 function promptSafeFunction(event){
     function myTemplateTag(strings, inputExp){
         let str0 = strings[0];
-        let str1 = strings[1];
 
-        return `${str0} "${inputExp}" ${str1} Thanks user!`;
+        return `${str0} "${inputExp}" (Safe Mode)`;
     }
 
 
     let userInput = prompt('Please enter your input', '');
     let cleanedInput = DOMPurify.sanitize(userInput);
-    const outputTag = document.getElementById('promptSafeOutput');
 
-    let finalOutput = myTemplateTag`The user entered this: ${cleanedInput} in the prompt box.`;
+    let finalOutput = myTemplateTag`The user entered: ${cleanedInput}`;
 
     if(userInput == null){
-        outputTag.innerText = 'User didn’t enter anything';
+        outputTag.innerText = 'User didn\'t enter anything';
     }
     else{
         outputTag.innerText = finalOutput;
@@ -48,16 +73,18 @@ function promptSafeFunction(event){
 
 document.addEventListener('DOMContentLoaded', () =>
     {
+        outputTag = document.getElementById('outputTag');
+
         const alertButton = document.getElementById('alertButton');
-        alertButton.addEventListener('click', alertFunction);
+        alertButton.addEventListener('click', clearBeforeAlert);
 
         const confirmButton = document.getElementById('confirmButton');
-        confirmButton.addEventListener('click', confirmFunction);
+        confirmButton.addEventListener('click', clearBeforeConfirm);
 
         const promptButtonUnsafe = document.getElementById('promptButtonUnsafe');
-        promptButtonUnsafe.addEventListener('click', promptUnsafeFunction);
+        promptButtonUnsafe.addEventListener('click', clearBeforePromptUnsafe);
 
         const promptButtonSafe = document.getElementById('promptButtonSafe');
-        promptButtonSafe.addEventListener('click', promptSafeFunction);
+        promptButtonSafe.addEventListener('click', clearBeforePromptSafe);
     }
 )
