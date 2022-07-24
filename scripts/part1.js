@@ -52,7 +52,7 @@ function promptSafeFunction(event){
     function myTemplateTag(strings, inputExp){
         let str0 = strings[0];
 
-        return `${str0} "${inputExp}" (Safe Mode)`;
+        return `(Safe Mode) ${str0} ${inputExp}`;
     }
 
 

@@ -1,12 +1,18 @@
+let outputTag;
+
 // Alert
 function alertFunction(event){
     const alertDialog = document.getElementById('alertDialog');
+    outputTag.innerText = '';
+
     alertDialog.showModal();
 }
 
 //Confirm
 let confirmDialog;
 function confirmFunction(event){
+    outputTag.innerText = '';
+
     confirmDialog.showModal();
 }
 
@@ -14,6 +20,7 @@ function confirmFunction(event){
 let promptUnsafeDialog;
 let unsafeInput;
 function promptUnsafeFunction(event){
+    outputTag.innerText = '';
     unsafeInput.value = '';
     promptUnsafeDialog.showModal();
 }
@@ -22,6 +29,7 @@ function promptUnsafeFunction(event){
 let promptSafeDialog;
 let safeInput;
 function promptSafeFunction(event){
+    outputTag.innerText = '';
     safeInput.value = '';
     promptSafeDialog.showModal();
 }
@@ -29,6 +37,8 @@ function promptSafeFunction(event){
 
 document.addEventListener('DOMContentLoaded', () =>
     {
+        outputTag = document.getElementById('outputTag');
+
         //Alert
         const alertButton = document.getElementById('alertButton');
         alertButton.addEventListener('click', alertFunction);
@@ -37,11 +47,10 @@ document.addEventListener('DOMContentLoaded', () =>
         const confirmButton = document.getElementById('confirmButton');
         confirmButton.addEventListener('click', confirmFunction);
         confirmDialog = document.getElementById('confirmDialog');
-        const confirmOutputTag = document.getElementById('confirmOutputTag');
 
         confirmDialog.addEventListener('close', () =>
             {
-                confirmOutputTag.innerText = `The value returned by the confirm method is : ${confirmDialog.returnValue}`;
+                outputTag.innerText = `The value returned by the confirm method is : ${confirmDialog.returnValue}`;
             }
         )
         
@@ -50,15 +59,14 @@ document.addEventListener('DOMContentLoaded', () =>
         const promptButtonUnsafe = document.getElementById('promptButtonUnsafe');
         promptButtonUnsafe.addEventListener('click', promptUnsafeFunction);
         promptUnsafeDialog = document.getElementById('promptUnsafeDialog');
-        const promptUnsafeOutputTag = document.getElementById('promptUnsafeOutput');
 
         promptUnsafeDialog.addEventListener('close', () =>
             {
                 if(promptUnsafeDialog.returnValue == 'cancel'){
-                    promptUnsafeOutputTag.innerText = 'User didn\'t enter anything';
+                    outputTag.innerText = 'User didn\'t enter anything';
                 }
                 else if(promptUnsafeDialog.returnValue == 'ok'){
-                    promptUnsafeOutputTag.innerText = `The user entered: ${unsafeInput.value}`;
+                    outputTag.innerText = `The user entered: ${unsafeInput.value}`;
                 }
             }
         )
@@ -68,27 +76,25 @@ document.addEventListener('DOMContentLoaded', () =>
         const promptButtonSafe = document.getElementById('promptButtonSafe');
         promptButtonSafe.addEventListener('click', promptSafeFunction);
         promptSafeDialog = document.getElementById('promptSafeDialog');
-        const promptSafeOutputTag = document.getElementById('promptSafeOutput');
 
         promptSafeDialog.addEventListener('close', () =>
             {
                 if(promptSafeDialog.returnValue == 'cancel'){
-                    promptSafeOutputTag.innerText = 'User didn\'t enter anything';
+                    outputTag.innerText = 'User didn\'t enter anything';
                 }
                 else if(promptSafeDialog.returnValue == 'ok'){
-                    
+
                     function myTemplateTag(strings, inputExp){
                         let str0 = strings[0];
-                        let str1 = strings[1];
                 
-                        return `${str0} "${inputExp}" ${str1} Thanks user!`;
+                        return `(Safe Mode) ${str0} ${inputExp}`;
                     }
 
                     let cleanedInput = DOMPurify.sanitize(safeInput.value);
 
-                    let finalOutput = myTemplateTag`The user entered this: ${cleanedInput} in the prompt box.`;
+                    let finalOutput = myTemplateTag`The user entered: ${cleanedInput}`;
 
-                    promptSafeOutputTag.innerText = finalOutput;
+                    outputTag.innerText = finalOutput;
                 }
             }
         )
