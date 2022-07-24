@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Page</title>
+    <style>
+        ol{
+            text-align: center;
+        }
+        li{
+            margin-bottom: 20px;
+        }
+    </style>
+    <script type="text/javascript" src="src/purify.js"></script>
+    <script type="module" src="scripts/part1.js"></script>
+</head>
+<body>
+    <ol>
+        <li><button type="button" id="alertButton">Alert</button></li>
+
+        <li><button type="button" id ="confirmButton">Confirm</button></li>
+        <output for="confirmButton" id="confirmOutputTag"></output>
+
+        <li><button type="button" id="promptButtonUnsafe">Prompt</button></li>
+        <output for="promptButtonUnsafe" id="promptUnsafeOutput"></output>
+
+        <li><button type="button" id="promptButtonSafe">Safer Prompt</button></li>
+        <output for="promptButtonSafe" id="promptSafeOutput"></output>
+    </ol>
+</body>
+</html>
