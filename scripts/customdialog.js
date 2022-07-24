@@ -3,7 +3,7 @@ let outputTag;
 // Alert
 function alertFunction(event){
     const alertDialog = document.getElementById('alertDialog');
-    outputTag.innerText = '';
+    outputTag.innerHTML = '';
 
     alertDialog.showModal();
 }
@@ -11,7 +11,7 @@ function alertFunction(event){
 //Confirm
 let confirmDialog;
 function confirmFunction(event){
-    outputTag.innerText = '';
+    outputTag.innerHTML = '';
 
     confirmDialog.showModal();
 }
@@ -20,7 +20,7 @@ function confirmFunction(event){
 let promptUnsafeDialog;
 let unsafeInput;
 function promptUnsafeFunction(event){
-    outputTag.innerText = '';
+    outputTag.innerHTML = '';
     unsafeInput.value = '';
     promptUnsafeDialog.showModal();
 }
@@ -29,7 +29,7 @@ function promptUnsafeFunction(event){
 let promptSafeDialog;
 let safeInput;
 function promptSafeFunction(event){
-    outputTag.innerText = '';
+    outputTag.innerHTML = '';
     safeInput.value = '';
     promptSafeDialog.showModal();
 }
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () =>
 
         confirmDialog.addEventListener('close', () =>
             {
-                outputTag.innerText = `The value returned by the confirm method is : ${confirmDialog.returnValue}`;
+                outputTag.innerHTML = `The value returned by the confirm method is : ${confirmDialog.returnValue}`;
             }
         )
         
@@ -63,10 +63,10 @@ document.addEventListener('DOMContentLoaded', () =>
         promptUnsafeDialog.addEventListener('close', () =>
             {
                 if(promptUnsafeDialog.returnValue == 'cancel'){
-                    outputTag.innerText = 'User didn\'t enter anything';
+                    outputTag.innerHTML = 'User didn\'t enter anything';
                 }
                 else if(promptUnsafeDialog.returnValue == 'ok'){
-                    outputTag.innerText = `The user entered: ${unsafeInput.value}`;
+                    outputTag.innerHTML = `The user entered: ${unsafeInput.value}`;
                 }
             }
         )
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () =>
         promptSafeDialog.addEventListener('close', () =>
             {
                 if(promptSafeDialog.returnValue == 'cancel'){
-                    outputTag.innerText = 'User didn\'t enter anything';
+                    outputTag.innerHTML = 'User didn\'t enter anything';
                 }
                 else if(promptSafeDialog.returnValue == 'ok'){
 
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () =>
 
                     let finalOutput = myTemplateTag`The user entered: ${cleanedInput}`;
 
-                    outputTag.innerText = finalOutput;
+                    outputTag.innerHTML = finalOutput;
                 }
             }
         )
