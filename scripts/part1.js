@@ -41,10 +41,10 @@ function promptUnsafeFunction(event){
     let userInput = prompt('Please enter your input', '');
 
     if(userInput == null){
-        outputTag.innerText = 'User didn\'t enter anything';
+        outputTag.innerHTML = 'User didn\'t enter anything';
     }
     else{
-        outputTag.innerText = `The user entered: ${userInput}`;
+        outputTag.innerHTML = `The user entered: ${userInput}`;
     }
 }
 
@@ -52,7 +52,7 @@ function promptSafeFunction(event){
     function myTemplateTag(strings, inputExp){
         let str0 = strings[0];
 
-        return `(Safe Mode) ${str0} ${inputExp}`;
+        return `(Safe Mode)${str0} ${inputExp}`;
     }
 
 
@@ -62,10 +62,10 @@ function promptSafeFunction(event){
     let finalOutput = myTemplateTag`The user entered: ${cleanedInput}`;
 
     if(userInput == null){
-        outputTag.innerText = 'User didn\'t enter anything';
+        outputTag.innerHTML = 'User didn\'t enter anything';
     }
     else{
-        outputTag.innerText = finalOutput;
+        outputTag.innerHTML = finalOutput;
     }
 
 }
