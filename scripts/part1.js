@@ -22,8 +22,27 @@ function promptUnsafeFunction(event){
 }
 
 function promptSafeFunction(event){
-    let clean = DOMPurify.sanitize('hi there');
-    console.log(clean);
+    function myTemplateTag(strings, inputExp){
+        let str0 = strings[0];
+        let str1 = strings[1];
+
+        return `${str0} "${inputExp}" ${str1} Thanks user!`;
+    }
+
+
+    let userInput = prompt('Please enter your input', '');
+    let cleanedInput = DOMPurify.sanitize(userInput);
+    const outputTag = document.getElementById('promptSafeOutput');
+
+    let finalOutput = myTemplateTag`The user entered this: ${cleanedInput} in the prompt box.`;
+
+    if(userInput == null){
+        outputTag.innerText = 'User didn’t enter anything';
+    }
+    else{
+        outputTag.innerText = finalOutput;
+    }
+
 }
 
 
