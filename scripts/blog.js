@@ -1,5 +1,5 @@
-//The array that stores the Post info
-let postInfoArray = [];
+//The array that stores the Post info. Only for testing, will replace with local storage.
+window.postInfoArray = [];
 
 //Add Post
 let addPostDialog;
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () =>
 
                 //Add the actual post info to the markup of the page
                 const idNumber = postInfoArray.length - 1;
-                const newPost = `<li class="postListItem" id=${idNumber}>#${idNumber}: ${postInput.value} <button onclick="myFunction('${idNumber}')">Delete</button></li>`
+                const newPost = `<li class="postListItem" id=${idNumber}>#${idNumber}: ${postInput.value} <button onclick="deletePost('${idNumber}')">Delete</button></li>`
                 postListTag.innerHTML = postListTag.innerHTML + newPost;
             }
         }
