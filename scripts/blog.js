@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () =>
 
                 //Add the actual post info to the markup of the page
                 const idNumber = postInfoArray.length - 1;
-                const newPost = `<li class="postListItem" id=${idNumber}>#${idNumber}: ${postInput.value} <button onclick="deletePost('${idNumber}')">Delete</button></li>`
+                const newPost = `<li class="postListItem" id=${idNumber}>#${idNumber}: ${postInput.value} <button id="5" onclick="deletePost(this.id)">Delete</button></li>`
                 postListTag.innerHTML = postListTag.innerHTML + newPost;
             }
         }
