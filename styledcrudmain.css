@@ -109,3 +109,29 @@ button:hover{
     height: 75px;
     width: 100px;
 }
+
+textarea{
+    min-height: 5em;
+    min-width: 20em;
+}
+
+#emptyListNotice{
+    text-align: center;
+    font-size: 3em;
+}
+
+dialog{
+    padding: 2em;
+}
+
+dialog button{
+    min-width: 7em;
+    min-height: 4em;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+dialog form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
