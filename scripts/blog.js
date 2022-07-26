@@ -1,9 +1,28 @@
 //Used to pass current post id being deleted/edited
 window.currentPostId = ''; 
+
 //The array that stores the Post info. Only for testing, will replace with local storage.
 let postInfoArray = [];
+function setupLocalStorage(){
+    //Check first if the key is in local storage. If not we need to create it for first time.
+    if (localStorage.getItem('blogPostArrayKey') === null) {
+        //Need to prepopulate list if first time. 
+        let templateArray = [];
+        const templateItem1 = {parentId: '422cf175-8c97-4d8d-8d3e-bdf8620670e3', summary: 'Today I went to the park. It was fun.', date: '2022-07-25', title: 'Fun Day'};
+        const templateItem2 = {parentId: 'dd2e1b0b-349d-4577-a8c0-b7d262844379', summary: 'Today was ok. I did not do very much.', date: '2022-07-26', title: 'Ok Day'};
+        const templateItem3 = {parentId: 'd97c3fa5-6c9a-4296-9380-5dc09d9c6d21', summary: 'Today was interesting. I saw a musical event.', date: '2022-07-27', title: 'Interesting Day'};
+        templateArray.push(templateItem1);
+        templateArray.push(templateItem2);
+        templateArray.push(templateItem3);
+        localStorage.setItem('blogPostArrayKey', JSON.stringify(templateArray));
+    }
 
-let postListTag;
+    postInfoArray = JSON.parse(localStorage.getItem('blogPostArrayKey'));
+
+}
+
+//Get the post list, so you can add to it.
+let postListTag =  document.getElementById('postList');
 function injectListItems(){
     let postAggregate = '';
     for(let i = 0; i < postInfoArray.length; i++){
@@ -29,8 +48,11 @@ function addPostFunction(event){
 
 document.addEventListener('DOMContentLoaded', () =>
 {
-    //Get the post list, so you can add to it.
-    postListTag = document.getElementById('postList');
+    //Pull items from local storage.
+    setupLocalStorage();
+    //Display local stored items.
+    injectListItems();
+
 
     //Add Post
     addPostInput = document.getElementById('postInput');
@@ -51,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () =>
                 const postId = crypto.randomUUID();
                 const newPost = {parentId: postId, summary: addPostInput.value, date: addDateInput.value, title: addTitleInput.value}
                 postInfoArray.push(newPost);
+                localStorage.setItem('blogPostArrayKey', JSON.stringify(postInfoArray));
 
                 //Add the actual post info to the markup of the page
                 injectListItems();
@@ -64,6 +87,8 @@ document.addEventListener('DOMContentLoaded', () =>
             if(deletePostDialog.returnValue == 'ok'){
                 const filteredArray = postInfoArray.filter(function(e) { return e.parentId !== window.currentPostId });
                 postInfoArray = filteredArray;
+                localStorage.setItem('blogPostArrayKey', JSON.stringify(postInfoArray));
+
                 injectListItems();
                 window.currentPostId = '';
             }
@@ -83,6 +108,8 @@ document.addEventListener('DOMContentLoaded', () =>
                 postInfoArray[indexOfObject].summary = editInputValue;
                 postInfoArray[indexOfObject].title = editTitleValue;
                 postInfoArray[indexOfObject].date = editDateValue;
+
+                localStorage.setItem('blogPostArrayKey', JSON.stringify(postInfoArray));
                 
                 injectListItems();
                 window.currentPostId = '';
