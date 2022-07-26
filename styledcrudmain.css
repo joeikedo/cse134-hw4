@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    background-color: #97C4B8;
 }
 
 h1{
@@ -32,6 +33,8 @@ li{
 
 #deletePostDialog{
     text-align: center;
+    min-width: 15em;
+    min-height: 5em;
 }
 
 ul > li > h2{
@@ -71,7 +74,6 @@ button:hover{
 
     height: 75px;
     width: 100px;
-    /* border: none; */
 }
 
 .editButton span{
@@ -89,9 +91,21 @@ button:hover{
 
     height: 75px;
     width: 100px;
-    /* border: none; */
 }
 
 .deleteButton span{
     display: none;
+}
+
+#addPostButton{
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 1em;
+
+    background-image: url(media/plus_icon.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+
+    height: 75px;
+    width: 100px;
 }
