@@ -1,1 +1,1 @@
-- Test
+- Added Google analytics script tag to head of `index.html`. 
