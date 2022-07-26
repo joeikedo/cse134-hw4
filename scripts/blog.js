@@ -24,6 +24,15 @@ function setupLocalStorage(){
 //Get the post list, so you can add to it.
 let postListTag =  document.getElementById('postList');
 function injectListItems(){
+
+    const emptyNoticeTag = document.getElementById('emptyListNotice');
+    if(postInfoArray.length == 0){
+        emptyNoticeTag.innerText = 'There are no blog posts.';
+    }
+    else{
+        emptyNoticeTag.innerText = '';
+    }
+    
     let postAggregate = '';
     for(let i = 0; i < postInfoArray.length; i++){
         postAggregate = postAggregate + `<li id="${postInfoArray[i].parentId}">${postInfoArray[i].title} - (${postInfoArray[i].date}): ${postInfoArray[i].summary} <button data-parent-id-edit="${postInfoArray[i].parentId}" data-parent-summary="${postInfoArray[i].summary}" data-parent-title="${postInfoArray[i].title}" data-parent-date="${postInfoArray[i].date}" onclick="editPost(this.getAttribute('data-parent-id-edit'), this.getAttribute('data-parent-summary'), this.getAttribute('data-parent-title'), this.getAttribute('data-parent-date'))">Edit</button><button data-parent-id="${postInfoArray[i].parentId}" onclick="deletePost(this.getAttribute('data-parent-id'))">Delete</button></li>`
@@ -64,11 +73,8 @@ document.addEventListener('DOMContentLoaded', () =>
     addPostDialog = document.getElementById('addPostDialog');
     addPostDialog.addEventListener('close', () =>
         {
-            if(addPostDialog.returnValue == 'cancel'){
-                //TODO delete this console.log after!!!!!!
-                console.log(postInfoArray); //Just for testing!!!!!
-            }
-            else if(addPostDialog.returnValue == 'ok'){
+            
+            if(addPostDialog.returnValue == 'ok'){
                 //Add the new post to local storage so it can be retrieved on subsequent page loads.
                 const postId = crypto.randomUUID();
                 const newPost = {parentId: postId, summary: addPostInput.value, date: addDateInput.value, title: addTitleInput.value}
