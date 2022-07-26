@@ -49,12 +49,13 @@ ul > li > div{
 
 button:hover{
     cursor: pointer;
+    background-color: lightgray;
 }
 
 #addPostButton{
     position: fixed;
     bottom: 3em;
-    right: 5em;
+    right: 9em;
     width: 10em;
     height: 5em;
 }
@@ -62,6 +63,7 @@ button:hover{
 .editButton{
     margin-left: auto;
     margin-right: auto;
+    border-radius: 1em;
 
     background-image: url(media/pencil_icon.svg);
     background-repeat: no-repeat;
@@ -69,10 +71,27 @@ button:hover{
 
     height: 75px;
     width: 100px;
-    border: none;
+    /* border: none; */
+}
+
+.editButton span{
+    display: none;
 }
 
 .deleteButton{
     margin-left: auto;
     margin-right: auto;
+    border-radius: 1em;
+
+    background-image: url(media/trash_icon.svg);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+
+    height: 75px;
+    width: 100px;
+    /* border: none; */
+}
+
+.deleteButton span{
+    display: none;
 }
