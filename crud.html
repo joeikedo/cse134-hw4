@@ -10,10 +10,10 @@
           window.currentPostId = input;
           document.getElementById('deletePostDialog').showModal();
         }
-        function editPost(input){
-          window.currentPostId = input;
+        function editPost(parentId, summary){
+          window.currentPostId = parentId;
           const editPostInputTag = document.getElementById('editPostInput');
-          editPostInputTag.value = 'test';
+          editPostInputTag.value = summary;
           document.getElementById('editPostDialog').showModal();
         }
     </script>
