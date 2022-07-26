@@ -10,10 +10,13 @@
           window.currentPostId = input;
           document.getElementById('deletePostDialog').showModal();
         }
-        function editPost(parentId, summary){
+        function editPost(parentId, summary, title, date){
           window.currentPostId = parentId;
-          const editPostInputTag = document.getElementById('editPostInput');
-          editPostInputTag.value = summary;
+
+          document.getElementById('editPostInput').value = summary;
+          document.getElementById('editTitle').value = title;
+          document.getElementById('editDate').value = date;
+          
           document.getElementById('editPostDialog').showModal();
         }
     </script>
@@ -27,7 +30,13 @@
     <button type="button" id="addPostButton">Add Post</button>
 
     <dialog id="addPostDialog">
-        <p>Prompt Pressed. Enter input:</p>
+        <label for="addTitle">Title: </label>
+        <input id="addTitle" type="text">
+        <br>
+        <label for="addDate">Date: </label>
+        <input id="addDate" type="date">
+        <br>
+        <label for="postInput">Summary: </label>
         <input id="postInput" type="text">
         <form method="dialog">
           <button value="ok">OK</button>
@@ -44,7 +53,13 @@
   </dialog>
 
   <dialog id="editPostDialog">
-    <p>Edit Post. Enter input:</p>
+    <label for="editTitle">Title: </label>
+    <input id="editTitle" type="text">
+    <br>
+    <label for="editDate">Date: </label>
+    <input id="editDate" type="date">
+    <br>
+    <label for="editPostInput">Summary: </label>
     <input id="editPostInput" type="text">
     <form method="dialog">
       <button value="ok">OK</button>
