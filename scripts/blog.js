@@ -1,11 +1,22 @@
 //The array that stores the Post info. Only for testing, will replace with local storage.
-window.postInfoArray = [];
+window.currentPostId = ''; //Used to pass current post id being deleted/edited
+let postInfoArray = [];
+let postListTag;
+
+function injectListItems(){
+    let postAggregate = '';
+    for(let i = 0; i < postInfoArray.length; i++){
+        postAggregate = postAggregate + `<li id="${postInfoArray[i].parentId}">${postInfoArray[i].parentId}: ${postInfoArray[i].summary} <button data-parent-id-edit="${postInfoArray[i].parentId}" onclick="editPost(this.getAttribute('data-parent-id-edit'))">Edit</button><button data-parent-id="${postInfoArray[i].parentId}" onclick="deletePost(this.getAttribute('data-parent-id'))">Delete</button></li>`
+    }
+    postListTag.innerHTML = postAggregate;
+} 
+
 
 //Add Post
 let addPostDialog;
 let addPostInput;
 function addPostFunction(event){
-    postInput.value = '';
+    addPostInput.value = '';
     addPostDialog.showModal();
 }
 
@@ -14,7 +25,7 @@ function addPostFunction(event){
 document.addEventListener('DOMContentLoaded', () =>
 {
     //Get the post list, so you can add to it.
-    const postListTag = document.getElementById('postList');
+    postListTag = document.getElementById('postList');
 
     //Add Post
     addPostInput = document.getElementById('postInput');
@@ -26,16 +37,28 @@ document.addEventListener('DOMContentLoaded', () =>
         {
             if(addPostDialog.returnValue == 'cancel'){
                 //TODO delete this console.log after!!!!!!
-                console.log(postInfoArray);
+                console.log(postInfoArray); //Just for testing!!!!!
             }
             else if(addPostDialog.returnValue == 'ok'){
                 //Add the new post to local storage so it can be retrieved on subsequent page loads.
-                postInfoArray.push(postInput.value);
+                const postId = crypto.randomUUID();
+                const newPost = {parentId: postId, summary: postInput.value}
+                postInfoArray.push(newPost);
 
                 //Add the actual post info to the markup of the page
-                const idNumber = postInfoArray.length - 1;
-                const newPost = `<li class="postListItem" id=${idNumber}>#${idNumber}: ${postInput.value} <button id="5" onclick="deletePost(this.id)">Delete</button></li>`
-                postListTag.innerHTML = postListTag.innerHTML + newPost;
+                injectListItems();
+            }
+        }
+    )
+
+    const deletePostDialog = document.getElementById('deletePostDialog');
+    deletePostDialog.addEventListener('close', ()=> 
+        {
+            if(deletePostDialog.returnValue == 'ok'){
+                const filteredArray = postInfoArray.filter(function(e) { return e.parentId !== window.currentPostId });
+                postInfoArray = filteredArray;
+                injectListItems();
+                window.currentPostId = '';
             }
         }
     )

@@ -7,14 +7,19 @@
     <script type="module" src="scripts/blog.js"></script>
     <script>
         function deletePost(input) {
-          console.log(input);
-          console.log(postInfoArray);
+          window.currentPostId = input;
+          document.getElementById('deletePostDialog').showModal();
+        }
+        function editPost(input){
+          window.currentPostId = input;
+          const editPostInputTag = document.getElementById('editPostInput');
+          editPostInputTag.value = 'test';
+          document.getElementById('editPostDialog').showModal();
         }
     </script>
 </head>
 <body>
     <h1>Blog Posts</h1>
-
     <ul id="postList">
 
     </ul>
@@ -29,5 +34,23 @@
           <button value="cancel">Cancel</button>
         </form>
     </dialog>
+
+    <dialog id="deletePostDialog">
+      <p>Delete Post?</p>
+      <form method="dialog">
+        <button value="ok">OK</button>
+        <button value="cancel">Cancel</button>
+      </form>
+  </dialog>
+
+  <dialog id="editPostDialog">
+    <p>Edit Post. Enter input:</p>
+    <input id="editPostInput" type="text">
+    <form method="dialog">
+      <button value="ok">OK</button>
+      <button value="cancel">Cancel</button>
+    </form>
+  </dialog>
+
 </body>
 </html>
