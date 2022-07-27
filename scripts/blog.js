@@ -1,8 +1,11 @@
-//Used to pass current post id being deleted/edited
+//This global variable is used to check the current id of the post being deleted/edited.
+//It is set by the onclick event handlers in the crud.html page.
 window.currentPostId = ''; 
 
-//The array that stores the Post info. Only for testing, will replace with local storage.
+//The array that stores the Post info. It is filled with the localStorage saved values in the below setupLocalStorage function.
 let postInfoArray = [];
+
+//This function sets any blogposts stored in local storage to be saved in the postInfoArray variable.
 function setupLocalStorage(){
     //Check first if the key is in local storage. If not we need to create it for first time.
     if (localStorage.getItem('blogPostArrayKey') === null) {
@@ -21,8 +24,12 @@ function setupLocalStorage(){
 
 }
 
-//Get the post list, so you can add to it.
+
+//Get the post list, so you can blog post <li> elements to it using the injectListItems() function below.
 let postListTag =  document.getElementById('postList');
+//This function goes through the array of blog posts and inserts them into the postListTag html tag as list item tags.
+//Additionally, two button tags with embedded onclick event handlers are added inside the list item tag, along with some
+//div/span tags to help with styling that occurs later on. 
 function injectListItems(){
 
     const emptyNoticeTag = document.getElementById('emptyListNotice');
@@ -41,7 +48,8 @@ function injectListItems(){
 } 
 
 
-//Add Post
+//Add Post button click event handler. Shows the add post modal to screen with empty input fields.
+//These variables are all set by the bottom DOMContentLoaded function.
 let addPostDialog;
 let addTitleInput;
 let addPostInput;
@@ -53,8 +61,65 @@ function addPostFunction(event){
     addPostDialog.showModal();
 }
 
+//These three functions handle the events where the add/edit/delete dialog boxes are closed.
+/**
+ * blogPost objects are added into the postInfoArray variable/localStorage and they have the following fields:
+ *  parentId: String. This is the id of the <li> tag which contains the blogpost in HTML.
+ *  summary: String.
+ *  date: String.
+ *  title: String.
+ */
+function closeAddPostDialogHandler(){
+    if(addPostDialog.returnValue == 'ok'){
+        //Add the new post to local storage so it can be retrieved on subsequent page loads.
+        const postId = crypto.randomUUID();
+        const newPost = {parentId: postId, summary: addPostInput.value, date: addDateInput.value, title: addTitleInput.value}
+        postInfoArray.push(newPost);
+        localStorage.setItem('blogPostArrayKey', JSON.stringify(postInfoArray));
+
+        //Add the actual post info to the markup of the page
+        injectListItems();
+    }
+}
+
+function closeDeletePostDialogHandler(){
+    const deletePostDialog = document.getElementById('deletePostDialog');
+
+    if(deletePostDialog.returnValue == 'ok'){
+        //Filter out the array element with the corresponding parentId value.
+        const filteredArray = postInfoArray.filter(function(e) { return e.parentId !== window.currentPostId });
+        postInfoArray = filteredArray;
+        localStorage.setItem('blogPostArrayKey', JSON.stringify(postInfoArray));
+
+        injectListItems();
+        window.currentPostId = '';
+    }
+}
+
+function closeEditPostDialogHandler(){
+    const editPostDialog = document.getElementById('editPostDialog');
+
+    if(editPostDialog.returnValue == 'ok'){
+        const editInputValue = document.getElementById('editPostInput').value;
+        const editTitleValue = document.getElementById('editTitle').value;
+        const editDateValue = document.getElementById('editDate').value;
+
+        const indexOfObject = postInfoArray.findIndex((obj => obj.parentId == window.currentPostId));
+        
+        postInfoArray[indexOfObject].summary = editInputValue;
+        postInfoArray[indexOfObject].title = editTitleValue;
+        postInfoArray[indexOfObject].date = editDateValue;
+
+        localStorage.setItem('blogPostArrayKey', JSON.stringify(postInfoArray));
+        
+        injectListItems();
+        window.currentPostId = '';
+    }
+}
 
 
+//This function checks local storage to display the blog posts to the page, and then sets the add/edit/delete dialog
+//event listeners.
 document.addEventListener('DOMContentLoaded', () =>
 {
     //Pull items from local storage.
@@ -63,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () =>
     injectListItems();
 
 
-    //Add Post
+    //Add post listeners to showing modal, and handling modal input once closed.
     addPostInput = document.getElementById('postInput');
     addDateInput = document.getElementById('addDate');
     addTitleInput = document.getElementById('addTitle');
@@ -71,56 +136,16 @@ document.addEventListener('DOMContentLoaded', () =>
     addPostButton.addEventListener('click', addPostFunction);
 
     addPostDialog = document.getElementById('addPostDialog');
-    addPostDialog.addEventListener('close', () =>
-        {
-            
-            if(addPostDialog.returnValue == 'ok'){
-                //Add the new post to local storage so it can be retrieved on subsequent page loads.
-                const postId = crypto.randomUUID();
-                const newPost = {parentId: postId, summary: addPostInput.value, date: addDateInput.value, title: addTitleInput.value}
-                postInfoArray.push(newPost);
-                localStorage.setItem('blogPostArrayKey', JSON.stringify(postInfoArray));
+    addPostDialog.addEventListener('close', closeAddPostDialogHandler);
 
-                //Add the actual post info to the markup of the page
-                injectListItems();
-            }
-        }
-    )
 
+    //Delete post listener to handle when delete modal closed.
     const deletePostDialog = document.getElementById('deletePostDialog');
-    deletePostDialog.addEventListener('close', ()=> 
-        {
-            if(deletePostDialog.returnValue == 'ok'){
-                const filteredArray = postInfoArray.filter(function(e) { return e.parentId !== window.currentPostId });
-                postInfoArray = filteredArray;
-                localStorage.setItem('blogPostArrayKey', JSON.stringify(postInfoArray));
+    deletePostDialog.addEventListener('close', closeDeletePostDialogHandler);
 
-                injectListItems();
-                window.currentPostId = '';
-            }
-        }
-    )
 
+    //Edit post listener to handle when edit modal is closed. 
     const editPostDialog = document.getElementById('editPostDialog');
-    editPostDialog.addEventListener('close', ()=>  
-        {
-            if(editPostDialog.returnValue == 'ok'){
-                const editInputValue = document.getElementById('editPostInput').value;
-                const editTitleValue = document.getElementById('editTitle').value;
-                const editDateValue = document.getElementById('editDate').value;
-
-                const indexOfObject = postInfoArray.findIndex((obj => obj.parentId == window.currentPostId));
-                
-                postInfoArray[indexOfObject].summary = editInputValue;
-                postInfoArray[indexOfObject].title = editTitleValue;
-                postInfoArray[indexOfObject].date = editDateValue;
-
-                localStorage.setItem('blogPostArrayKey', JSON.stringify(postInfoArray));
-                
-                injectListItems();
-                window.currentPostId = '';
-            }
-        }
-    )
+    editPostDialog.addEventListener('close', closeEditPostDialogHandler);
 
 })

@@ -6,17 +6,17 @@
     <title>My Page</title>
     <script type="module" src="scripts/blog.js"></script>
     <script>
+        //Shows the delete modal when delete button is clicked.
         function deletePost(input) {
           window.currentPostId = input;
           document.getElementById('deletePostDialog').showModal();
         }
+        //Shows the edit modal when edit button is clicked, and prefills it with current post title/date/summary.
         function editPost(parentId, summary, title, date){
           window.currentPostId = parentId;
-
           document.getElementById('editPostInput').value = summary;
           document.getElementById('editTitle').value = title;
           document.getElementById('editDate').value = date;
-
           document.getElementById('editPostDialog').showModal();
         }
     </script>
