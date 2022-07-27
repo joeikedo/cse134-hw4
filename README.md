@@ -23,3 +23,4 @@ PID: A16544427
 - `styledcrudmain.css` file was used for this part. [Hosted Link](https://fantastic-gumption-62f37a.netlify.app/styledcrudmain.css)
 
 ## Part 5 
+- `contact.js` File created for contact form. Link [Hosted Link](https://fantastic-gumption-62f37a.netlify.app/scripts/contact.js)
