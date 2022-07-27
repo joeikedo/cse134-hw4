@@ -1,3 +1,4 @@
+//Opens up users mail app with mailto function, pulls user subject/message body from the HTML input/textarea tags.
 function mailFunction(event){
     event.preventDefault();
 
@@ -7,6 +8,7 @@ function mailFunction(event){
     document.location.href = `mailto:joeikedo@gmail.com?subject=${subjectLineInput.value}&body=${emailMessageInput.value}`;
 }
 
+//Adds event listener to the Contact form submit button.
 document.addEventListener('DOMContentLoaded', () =>
     {
         const emailSubmitButton = document.getElementById('emailSubmitButton');
