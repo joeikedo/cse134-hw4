@@ -1,9 +1,14 @@
+//outputTag variable is a reference to the HTML <output> tag where we output our values for confirm/prompt.
 let outputTag;
 
-//Clear functions, clear text as soon as a button is clicked. 
+//Clear functions, clear text as soon as a button is clicked. Buttons of type button have no default action so
+//the event parameter is unused, and does not need to be prevented.
 function clearBeforeAlert(event){
+    //When any button is clicked, the output tag must be cleared first before the alert displays. 
     outputTag.innerText = '';
 
+    //There is a timing issue where the output tag text does not clear immediately when a button is clicked, this is why
+    //the setTimeout function is used. 
     setTimeout(alertFunction, 0);
 }
 
@@ -25,8 +30,7 @@ function clearBeforePromptSafe(event){
     setTimeout(promptSafeFunction, 0);
 }
 
-//The functions called by the clear functions to do the actual alert boxes etc
-
+//The functions called by the clear functions to show the actual alert/confirm/prompt.
 function alertFunction(event){
     alert('Alert button was pressed');
 }
@@ -49,6 +53,8 @@ function promptUnsafeFunction(event){
 }
 
 function promptSafeFunction(event){
+
+    //This is a function for the tagged template string construction.
     function myTemplateTag(strings, inputExp){
         let str0 = strings[0];
 
@@ -58,7 +64,6 @@ function promptSafeFunction(event){
 
     let userInput = prompt('Please enter your input', '');
     let cleanedInput = DOMPurify.sanitize(userInput);
-
     let finalOutput = myTemplateTag`The user entered: ${cleanedInput}`;
 
     if(userInput == null){
@@ -70,7 +75,7 @@ function promptSafeFunction(event){
 
 }
 
-
+//This function sets up the event listeners on all four of the buttons once the DOM is loaded.
 document.addEventListener('DOMContentLoaded', () =>
     {
         outputTag = document.getElementById('outputTag');
