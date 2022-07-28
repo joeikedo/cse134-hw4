@@ -99,10 +99,29 @@ nav a:hover{
 /*Note: I intended to use these 3 view width variables for breakpoint media queries. However
     it seems that this is not possible without using SCSS or plugins. 
     (Source: https://stackoverflow.com/questions/40722882/css-native-variables-not-working-in-media-queries)*/
+
+@media screen and (max-width: 620px){
+    #videoWithDescription *{
+        width: 250px;
+    }
+
+    #gameMedia figure *{
+        width: 250px;
+    }
+}
+
 @media screen and (min-width: 621px) and (max-width: 1280px){
     #homeBody{
         background:url(media/ocean_background_medium.jpg) no-repeat center center fixed;
         background-size: cover;
+    }
+
+    #videoWithDescription *{
+        width: 350px;
+    }
+
+    #gameMedia figure *{
+        width: 350px;
     }
 }
 
@@ -111,12 +130,28 @@ nav a:hover{
         background:url(media/ocean_background_large.jpg) no-repeat center center fixed;
         background-size: cover;
     }
+
+    #videoWithDescription *{
+        width: 500px;
+    }
+
+    #gameMedia figure *{
+        width: 500px;
+    }
 }
 
 @media screen and (min-width: 1921px){
     #homeBody{
         background:url(media/ocean_background_extra_large.jpg) no-repeat center center fixed;
         background-size: cover;
+    }
+
+    #videoWithDescription *{
+        width: 650px;
+    }
+
+    #gameMedia figure *{
+        width: 650px;
     }
 }
 
@@ -171,6 +206,7 @@ nav a:hover{
 
 #profilePhoto{
     border-radius: var(--profile-photo-border-radius);
+    box-shadow: 0px 0px var(--nav-shadow-size) black;
 }
 
 
@@ -230,15 +266,17 @@ nav a:hover{
     max-width: var(--renpy-figure-width);
     margin-left: auto;
     margin-right: auto;
+    border: solid black 1px;
+    padding: 1em;
+    box-shadow: 0px 0px var(--nav-shadow-size) black;
 }
 
 #videoWithDescription{
     margin-left: auto;
     margin-right: auto;
-}
-
-#videoWithDescription *{
-    max-width: var(--video-width);
+    border: solid black 1px;
+    padding: 1em;
+    box-shadow: 0px 0px var(--nav-shadow-size) black;
 }
 
 #modelingSection ul {
@@ -255,6 +293,10 @@ nav a:hover{
 #modelingSection > ul > li{
     margin-left: auto;
     margin-right: auto;
+}
+
+#modelingSection ul li img{
+    box-shadow: 0px 0px var(--nav-shadow-size) black;
 }
 
 
@@ -339,7 +381,7 @@ nav a:hover{
 }
 
 #message{
-    width: 95vw;
+    width: calc(100vw/1.5);
     height: 10em;
 }
 
