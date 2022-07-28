@@ -5,7 +5,12 @@ function mailFunction(event){
     const subjectLineInput = document.getElementById('subjectLine');
     const emailMessageInput = document.getElementById('message');
 
-    document.location.href = `mailto:joeikedo@gmail.com?subject=${subjectLineInput.value}&body=${emailMessageInput.value}`;
+    if(!emailMessageInput.value){
+        alert('Please enter a message in the message body!');
+    }
+    else{
+        document.location.href = `mailto:joeikedo@gmail.com?subject=${subjectLineInput.value}&body=${emailMessageInput.value}`;
+    }
 }
 
 //Adds event listener to the Contact form submit button.

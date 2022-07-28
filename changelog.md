@@ -16,10 +16,11 @@
 <br>
 
 
-2. I added functionality for my 'email me' contact form. It uses the 'mailto' function to open up the users default mail app.
+2. I added the functionality for my 'email me' contact form. It uses the 'mailto' function to open up the users default mail app.
 (On Windows this is the 'Mail' app.) I used javascript in the `contact.js` file to pull the user input from the Subject 
 and message body input/textarea fields and automatically fill them in the users mail app with these values by inserting them into
-the mailto string. Please note that popup blocking may need to be disabled for the mail app window to display. 
+the mailto string. Please note that popup blocking may need to be disabled for the mail app window to display. Also performs
+a check to ensure user doesn't send empty mesage.
 
 - Note: On Windows if the user isn't signed in on the 'Mail' app, it will be blank so they need to be signed in. 
 
