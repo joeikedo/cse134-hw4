@@ -30,4 +30,4 @@ a check to ensure user doesn't send empty mesage by emitting an alert if the use
 3. 
 - Added more media queries to adjust the sizing of my video/image on the passion projects page. Also added some box shadows,
 and some borders to make the images/accompanying text look more polished. 
-- Adjusted size of contact form textarea to better fit page on small screens. 
+- Adjusted size of contact form textarea to better fit page on small screens. Also made submit button larger for ease.

@@ -385,6 +385,12 @@ nav a:hover{
     height: 10em;
 }
 
+#emailSubmitButton{
+    margin-top: 1em;
+    height: 3em;
+    width: 8em;
+}
+
 
 /* Hamburger Navbar for Mobile size screen */
 
